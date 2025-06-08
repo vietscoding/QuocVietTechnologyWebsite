@@ -20,8 +20,8 @@
   --label-color: #666;
   --input-background: #e8e8e8;
   --input-focus-background: #d9d9d9;
-  --accent-color: #e65100;
-  --accent-hover-color: #b33c00;
+  --accent-color: #f07025;
+  --accent-hover-color: #d35e1e;
   --shadow-color: rgba(0, 0, 0, 0.2);
   --footer-color: #666;
 }
@@ -145,7 +145,7 @@ header {
   opacity: 1;
 }
 
-.login-box {
+.signup-box {
   background-color: var(--box-background);
   padding: 2rem;
   border-radius: 16px;
@@ -157,7 +157,7 @@ header {
   position: relative;
 }
 
-.login-box h2 {
+.signup-box h2 {
   text-align: center;
   color: var(--accent-color);
   margin-bottom: 1.5rem;
@@ -189,7 +189,7 @@ input:focus {
   background-color: var(--input-focus-background);
 }
 
-.login-button {
+.signup-button {
   width: 100%;
   padding: 0.9rem;
   background-color: var(--accent-color);
@@ -201,7 +201,7 @@ input:focus {
   transition: background-color 0.3s ease;
 }
 
-.login-button:hover {
+.signup-button:hover {
   background-color: var(--accent-hover-color);
 }
 
@@ -262,12 +262,12 @@ input:focus {
     font-size: 14px;
   }
 
-  .login-box {
+  .signup-box {
     padding: 1.5rem;
     width: 95%;
   }
 
-  .login-box h2 {
+  .signup-box h2 {
     font-size: 1.5rem;
   }
 
@@ -277,7 +277,7 @@ input:focus {
     font-size: 16px;
   }
 
-  .login-button {
+  .signup-button {
     padding: 0.7rem;
   }
 
@@ -297,12 +297,12 @@ input:focus {
     height: auto;
   }
 
-  .login-box {
+  .signup-box {
     padding: 1.8rem;
     width: 90%;
   }
 
-  .login-box h2 {
+  .signup-box h2 {
     font-size: 1.6rem;
   }
 }
@@ -343,12 +343,12 @@ input:focus {
     font-size: 12px;
   }
 
-  .login-box {
+  .signup-box {
     padding: 1.2rem;
     width: 98%;
   }
 
-  .login-box h2 {
+  .signup-box h2 {
     font-size: 1.3rem;
   }
 }
