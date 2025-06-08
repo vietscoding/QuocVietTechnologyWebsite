@@ -1,0 +1,265 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #121212;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+header {
+  position: fixed; /* Cố định header ở trên cùng */
+  top: 0;
+  width: 100%; /* Chiếm toàn bộ chiều ngang */
+  display: flex; /* Sử dụng Flexbox để căn giữa */
+  justify-content: center; /* Căn giữa ngang */
+  align-items: center; /* Căn giữa dọc */
+  padding: 0px 0; /* Khoảng cách trên/dưới */
+  z-index: 100; /* Đảm bảo header nằm trên các phần tử khác */
+}
+
+#logo {
+  width: 200px; /* Giữ kích thước logo */
+  height: 200px;
+}
+
+.login-box {
+  background-color: #1e1e1e;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  max-width: 400px;
+  width: 100%;
+  color: #fff;
+  margin-top: 50px; /* Đẩy login-box xuống để tránh chồng lên logo */
+}
+
+.login-box h2 {
+  text-align: center;
+  color: #f07025;
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.2rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #ccc;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 10px;
+  background-color: #2c2c2c;
+  color: #fff;
+}
+
+input:focus {
+  outline: none;
+  background-color: #333;
+}
+
+.login-button {
+  width: 100%;
+  padding: 0.9rem;
+  background-color: #f07025;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #d35e1e;
+}
+
+.footer {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+.footer a {
+  color: #f07025;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+
+* {
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #121212;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+  z-index: 100;
+}
+
+#logo {
+  width: 200px;
+  height: 200px;
+  z-index: 100; /* Đảm bảo logo nằm trên nền nhưng dưới login-box nếu cần */
+}
+
+.login-box {
+  background-color: #1e1e1e;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  max-width: 400px;
+  width: 90%;
+  color: #fff;
+  margin-top: 220px; /* Đủ để tránh logo trên desktop */
+  z-index: 200; /* Đảm bảo login-box nằm trên logo */
+  position: relative; /* Đảm bảo z-index hoạt động */
+}
+
+.login-box h2 {
+  text-align: center;
+  color: #f07025;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
+.form-group {
+  margin-bottom: 1.2rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #ccc;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 10px;
+  background-color: #2c2c2c;
+  color: #fff;
+}
+
+input:focus {
+  outline: none;
+  background-color: #333;
+}
+
+.login-button {
+  width: 100%;
+  padding: 0.9rem;
+  background-color: #f07025;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #d35e1e;
+}
+
+.footer {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+.footer a {
+  color: #f07025;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+/* Media Queries cho Responsive */
+
+/* Màn hình nhỏ hơn 600px (mobile) */
+@media (max-width: 600px) {
+  #logo {
+    width: 80px; /* Giảm kích thước logo hơn nữa */
+    height: 80px;
+  }
+
+  .login-box {
+    margin-top: 100px; /* Giảm margin-top để phù hợp với logo nhỏ hơn */
+    padding: 1.5rem;
+    width: 95%;
+  }
+
+  .login-box h2 {
+    font-size: 1.5rem;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    padding: 0.6rem;
+  }
+
+  .login-button {
+    padding: 0.7rem;
+  }
+
+  .footer {
+    font-size: 0.8rem;
+  }
+}
+
+/* Màn hình từ 600px đến 768px (tablet) */
+@media (min-width: 601px) and (max-width: 768px) {
+  #logo {
+    width: 120px; /* Kích thước logo trung bình */
+    height: 120px;
+  }
+
+  .login-box {
+    margin-top: 140px; /* Điều chỉnh margin-top */
+    padding: 1.8rem;
+    width: 90%;
+  }
+
+  .login-box h2 {
+    font-size: 1.6rem;
+  }
+}
