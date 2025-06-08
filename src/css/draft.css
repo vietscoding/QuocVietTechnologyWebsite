@@ -1,5 +1,5 @@
 :root {
-  /* Dark Theme (mặc định) */
+  /* Dark Theme (default) */
   --background-color: #121212;
   --box-background: #1e1e1e;
   --text-color: #fff;
@@ -54,35 +54,95 @@ header {
   z-index: 100;
 }
 
-/* #logo {
-  max-width: 20vw;
-  width: 200px;
-  height: auto;
-} */
-
 #logo {
   max-width: 20vw;
   width: 200px;
   height: auto;
-  transition: all 0.3s ease; /* Hiệu ứng mượt khi đổi kích thước hoặc hình ảnh */
+  transition: all 0.3s ease;
 }
 
-.theme-toggle {
+/* Theme Switch */
+.theme-switch-wrapper {
   position: absolute;
   right: 20px;
   top: 10px;
-  padding: 0.5rem 1rem;
-  background-color: var(--accent-color);
-  color: var(--text-color);
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background-color 0.3s ease;
 }
 
-.theme-toggle:hover {
-  background-color: var(--accent-hover-color);
+.theme-switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.theme-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--input-background);
+  border-radius: 34px;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: var(--text-color);
+  border-radius: 50%;
+  transition: 0.4s;
+}
+
+/* Icon mặt trời và mặt trăng */
+.slider .fa-sun {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--accent-color);
+  font-size: 18px;
+  opacity: 1;
+  transition: opacity 0.4s;
+}
+
+.slider .fa-moon {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--accent-color);
+  font-size: 18px;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+/* Khi ở light theme (checkbox checked) */
+.theme-switch input:checked + .slider {
+  background-color: var(--input-focus-background);
+}
+
+.theme-switch input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.theme-switch input:checked + .slider .fa-sun {
+  opacity: 0;
+}
+
+.theme-switch input:checked + .slider .fa-moon {
+  opacity: 1;
 }
 
 .login-box {
@@ -177,10 +237,29 @@ input:focus {
     height: auto;
   }
 
-  .theme-toggle {
+  .theme-switch-wrapper {
     right: 10px;
-    padding: 0.4rem 0.8rem;
-    font-size: 0.8rem;
+  }
+
+  .theme-switch {
+    width: 50px;
+    height: 28px;
+  }
+
+  .slider:before {
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+  }
+
+  .theme-switch input:checked + .slider:before {
+    transform: translateX(22px);
+  }
+
+  .slider .fa-sun,
+  .slider .fa-moon {
+    font-size: 14px;
   }
 
   .login-box {
@@ -239,10 +318,29 @@ input:focus {
     height: auto;
   }
 
-  .theme-toggle {
+  .theme-switch-wrapper {
     right: 8px;
-    padding: 0.3rem 0.6rem;
-    font-size: 0.7rem;
+  }
+
+  .theme-switch {
+    width: 40px;
+    height: 24px;
+  }
+
+  .slider:before {
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+  }
+
+  .theme-switch input:checked + .slider:before {
+    transform: translateX(16px);
+  }
+
+  .slider .fa-sun,
+  .slider .fa-moon {
+    font-size: 12px;
   }
 
   .login-box {
