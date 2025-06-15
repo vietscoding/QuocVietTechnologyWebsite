@@ -28,11 +28,11 @@
       </form>
       <nav>
         <ul class="header-nav">
-          <li><a href="index.php">Home</a></li>
-          <li><a href="contact.php">Contact Us</a></li>
-          <li><a href="cart.php">My Cart</a></li>
-          <li><a href="profile.php">Profile</a></li>
-          <li><a href="login.php">Login</a></li>
+          <li><a href="index.php" style="text-decoration: none;">Home</a></li>
+          <li><a href="contact.php" style="text-decoration: none;">Contact Us</a></li>
+          <li><a href="cart.php" style="text-decoration: none;">My Cart</a></li>
+          <li><a href="profile.php" style="text-decoration: none;">Profile</a></li>
+          <li><a href="login.php" style="text-decoration: none;">Login</a></li>
         </ul>
       </nav>
       <div class="theme-switch-wrapper" title="Toggle Theme">
