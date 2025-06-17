@@ -10,8 +10,11 @@
 </head>
 <body>
 
-<?php include '../src/includes/header.php'; ?>  
 
+<?php 
+    $current_page = "home";
+    include '../src/includes/new_header.php';
+?>
   <main>
 
   </main>

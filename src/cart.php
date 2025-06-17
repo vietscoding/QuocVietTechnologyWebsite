@@ -8,7 +8,9 @@
 
 </head>
 <body>
-<?php include '../src/includes/header.php';?>
+<?php 
+$current_page = "cart";
+include '../src/includes/header.php';?>
     <h1>This is Cart Page</h1>
 
 <?php include '../src/includes/footer.php';?>

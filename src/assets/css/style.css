@@ -8,8 +8,8 @@
   --label-color: #ccc;
   --input-background: #2c2c2c;
   --input-focus-background: #333;
-  --accent-color: #f07025;
-  --accent-hover-color: #d35e1e;
+  --accent-color: #46c640;
+  --accent-hover-color: #40b93b;
   --shadow-color: rgba(0, 0, 0, 0.6);
   --footer-color: #aaa;
 }
@@ -21,8 +21,8 @@
   --label-color: #666;
   --input-background: #e8e8e8;
   --input-focus-background: #d9d9d9;
-  --accent-color: #f07025;
-  --accent-hover-color: #d35e1e;
+  --accent-color: #46c640;
+  --accent-hover-color: #40b93b;
   --shadow-color: rgba(0, 0, 0, 0.2);
   --footer-color: #666;
 }
@@ -43,7 +43,7 @@ body {
   padding-top: 220px;
 }
 
-header {
+header { 
   position: fixed;
   top: 0;
   width: 100%;

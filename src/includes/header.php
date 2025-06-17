@@ -6,23 +6,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/new_style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
 <header>
     <div class="header-main">
-      <img src="../src/assets/images/Quoc Viet dark theme.png" 
+      <img src="../src/assets/images/new_quocvietlogo.png" 
            alt="Home - Quoc Viet Technology"
            title="Home - Quoc Viet Technology"
            id="logo"
-           data-dark-src="../src/assets/images/Quoc Viet dark theme.png"
-           data-light-src="../src/assets/images/QuocVietLogoLightTheme.png"
+           data-dark-src="../src/assets/images/new_quocvietlogo.png"
+           data-light-src="../src/assets/images/new_quocvietlogo.png"
            usemap="#home"/>
       <map name="home">
-        <area shape="default" coords="" href="index.php">
+        <area shape="default" coords="" href="new_home.php">
       </map>
-      <form class="header-search" action="search.php" method="get">
+      <form class="header-search" action="search.php" method="get" style="display: inline">
         <input type="text" name="q" placeholder="Search..." aria-label="Search">
         <button type="submit"><i class="fas fa-search"></i></button>
       </form>
