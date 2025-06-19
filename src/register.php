@@ -1,9 +1,4 @@
-<?php 
-$page = basename($_SERVER['PHP_SELF']);
-$bodyClass = '';
-if ($page === 'login.php') $bodyClass = 'login-page';
-if ($page === 'register.php') $bodyClass = 'register-page';
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,12 +11,12 @@ if ($page === 'register.php') $bodyClass = 'register-page';
 <body class="<?= $bodyClass ?>">
   <header>
     <div style="display: flex; align-items: flex-start; justify-content: flex-start; width: 100%;">
-      <img src="../src/assets/images/Quoc Viet dark theme.png" 
+      <img src="../src/assets/images/new_quocviet_logo.png" 
            alt="Home - Quoc Viet Technology"
            title="Home - Quoc Viet Technology"
            id="logo"
-           data-dark-src="../src/assets/images/Quoc Viet dark theme.png"
-           data-light-src="../src/assets/images/QuocVietLogoLightTheme.png"
+           data-dark-src="../src/assets/images/new_quocviet_logo.png"
+           data-light-src="../src/assets/images/new_quocviet_logo.png"
            usemap="#home"
            style="margin-left: 20px; margin-right: auto; display: block; float: left; width: 100px; max-width: 20vw;"/>
       <map name="home">

@@ -9,7 +9,7 @@
 </head>
 <body>
 <?php include '../src/includes/header.php';?>
-    <h1>This is Profile Page</h1>
+    <h1>This is Product detail Page</h1>
 
 <?php include '../src/includes/footer.php';?>
 </body>

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login - Quoc Viet Technology</title>
-  <link rel="stylesheet" href="../src/assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloud/flare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
@@ -20,7 +20,7 @@
            usemap="#home"
            style="margin-left: 20px; margin-right: auto; display: block; float: left; width: 100px; max-width: 20vw;"/>
       <map name="home">
-        <area shape="default" coords="" href="new_home.php">
+        <area shape="default" coords="" href="home.php">
       </map>
     </div>  
     

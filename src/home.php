@@ -13,7 +13,7 @@
 
 <?php 
     $current_page = "home";
-    include '../src/includes/new_header.php';
+    include '../src/includes/header.php';
 ?>
   <main>
 
