@@ -29,6 +29,10 @@
             background-color: rgb(77, 157, 28);
             color: #ffffff;
         }
+
+        .navbar {
+            padding: 0;
+        }
         
     </style>
         
@@ -38,12 +42,12 @@
 
         <div class="container justify-content-start" style="width:10%" >
             <a class="navbar-brand" href="dashboard.php">
-                <img src="../assets/images/new_quocvietlogo.png" alt="Avatar Logo" style="width:40px;" class="rounded-pill"> 
+                <img src="../assets/images/new_quocvietlogo.png" alt="Avatar Logo" style="width:70px;" class="rounded-pill"> 
                 
             </a>
         </div>
         <div class="container-fluid" style="width:10%">
-            <h2>Admin</h2>
+            <h3>Admin</h3>
         </div>
         <div class="container-fluid justify-content-end">
             <ul class="nav justify-content-end" >
