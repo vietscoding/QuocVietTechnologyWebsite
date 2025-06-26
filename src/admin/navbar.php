@@ -6,33 +6,9 @@
     <title></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
     <link rel="stylesheet" href="../assets/css/admin_style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"> -->
     <style>
-        .nav-link {
-            color: #000000;
-            border-radius: 10px;
-        }
-
-        .nav-item {
-            margin-right: 5px;
-        }
-
-        .nav-link:hover {
-            background-color:rgb(147, 193, 21);
-            color: #ffffff;
-            text-decoration: none;
-            transition: all 0.2s ease;
-            /* border-radius: 10px; */
-        }
-
-        .active {
-            background-color: rgb(77, 157, 28);
-            color: #ffffff;
-        }
-
-        .navbar {
-            padding: 0;
-        }
+        
         
     </style>
         
@@ -42,7 +18,7 @@
 
         <div class="container justify-content-start" style="width:10%" >
             <a class="navbar-brand" href="dashboard.php">
-                <img src="../assets/images/new_quocvietlogo.png" alt="Avatar Logo" style="width:70px;" class="rounded-pill"> 
+                <img src="../assets/images/new_quocvietlogo.png" alt="Avatar Logo" style="width:50px;" class="rounded-pill"> 
                 
             </a>
         </div>

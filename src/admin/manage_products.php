@@ -12,6 +12,8 @@
     $current_page = "manage_products"; // Set the current page for the navbar
     // Include the navbar
     include 'navbar.php';
+    
+
     ?>
 
 
