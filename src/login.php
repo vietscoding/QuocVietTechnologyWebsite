@@ -54,7 +54,7 @@
         <input type="password" class="form-control" name="password" id="password" placeholder="Password" required />
         <label for="password">Password</label>
       </div>
-
+      <a href="register.php" class="text-primary">Don't have an account? Sign up</a>
       <button type="submit" class="btn btn-success" id="btnLogin">Log In</button>
     </form>
 
