@@ -5,60 +5,51 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sign up - Quoc Viet Technology</title>
-  <link rel="stylesheet" href="assets/css/style.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+  <link rel="stylesheet" href="./assets/css/style.css" />
 </head>
 <body class="<?= $bodyClass ?>">
   <header>
-    <div style="display: flex; align-items: flex-start; justify-content: flex-start; width: 100%;">
-      <img src="../src/assets/images/new_quocviet_logo.png" 
+    <div class="container-fluid" style="text-align: center;">
+      <img src="../src/assets/images/new_quocvietlogo.png" 
            alt="Home - Quoc Viet Technology"
            title="Home - Quoc Viet Technology"
            id="logo"
-           data-dark-src="../src/assets/images/new_quocviet_logo.png"
-           data-light-src="../src/assets/images/new_quocviet_logo.png"
-           usemap="#home"
-           style="margin-left: 20px; margin-right: auto; display: block; float: left; width: 100px; max-width: 20vw;"/>
+           usemap="#home"/>
       <map name="home">
-        <area shape="default" coords="" href="index.php">
+        <area shape="default" coords="" href="home.php">
       </map>
-    </div>
-    <div class="theme-switch-wrapper" title="Toggle Theme">
-      <label class="theme-switch" for="theme-toggle">
-        <input type="checkbox" id="theme-toggle">
-        <span class="slider">
-          <i class="fas fa-sun"></i>
-          <i class="fas fa-moon"></i>
-        </span>
-      </label>
-    </div>
+    </div>  
+
   </header>
-  <div class="login-box" id="register-box" style="margin-bottom: 200px">
-    <h2>Sign Up</h2>
-    <form action="includes/auth.php" method="POST" autocomplete="off">
-      <div class="form-group">
-        <label for="fullname">First and Last Name</label>
-        <input type="text" id="fullname" name="fullname" required />
+  <div class="container mt-5" id="register-form" >
+    <h2 style="text-align: center;">Sign Up</h2>
+    <form action="./includes/auth.php" method="POST" autocomplete="off">
+      <div class="form-floating mb-3 mt-3">
+        <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Enter your full name" required />
+        <label for="fullname" class="form-label">First and Last Name</label>
       </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required />
+      <div class="form-floating mb-3 mt-3">
+        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required />
+        <label for="email" class="form-label">Email</label>
       </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" required />
+      <div class="form-floating mb-3 mt-3">
+        <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required />
+        <label for="password" class="form-label">Password</label>
       </div>
-      <div class="form-group">
-        <label for="confirm_password">Confirm Password</label>
-        <input type="password" id="confirm_password" name="confirm_password" required />
+      <div class="form-floating mb-3 mt-3">
+        <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm your password" required />
+        <label for="pwd" class="form-label">Confirm Password</label>
       </div>
-      <button type="submit" class="login-button">Sign Up</button>
+      <button type="submit" class="btn btn-success" id="btnRegister">Sign Up</button>
     </form>
     <div class="footer" style="margin-top: 20px;">
       Have an account? <a href="login.php">Login</a>
     </div>
   </div>
+
 <?php include '../src/includes/footer.php'; ?>  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
   <script src="assets/js/theme.js"></script>
 </body>
 </html>

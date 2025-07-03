@@ -1,5 +1,5 @@
-/* :root {
-  --background-color: #f5f5f5;
+:root {
+  --background-color: ;
   --box-background: #fff;
   --text-color: #333;
   --label-color: #666;
@@ -11,7 +11,7 @@
   --footer-color: #666;
 }
 .dark-theme{
-  --background-color: #383838;
+  --background-color: hsl(0, 0%, 15%);
   --box-background: #323232;
   --text-color: #fff;
   --label-color: #ccc;
@@ -21,11 +21,10 @@
   --accent-hover-color: #40b93b;
   --shadow-color: rgba(0, 0, 0, 0.6);
   --footer-color: #aaa;
-} */
+}
 
-/* body {
-  background-color: red;
-} */
+
+
 
 #logo {
   display: inline-block; 
@@ -42,13 +41,13 @@
     padding: 10px;
     padding-top: 20px;
     padding-bottom: 50px;
-    background-color: aqua;
+    
   }
 }
 
 /* Format login box */
 
-#login-form {
+#login-form, #register-form {
   max-width: 400px;
   margin: auto;
   padding: 20px;
@@ -71,7 +70,7 @@
 }
 
 
-#btnLogin { 
+#btnLogin, #btnRegister { 
   /* background-color: #37a931;
   color: #fff;
   border: none;
