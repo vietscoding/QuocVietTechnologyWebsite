@@ -16,7 +16,8 @@
            alt="Home - Quoc Viet Technology"
            title="Home - Quoc Viet Technology"
            id="logo"
-           usemap="#home"/>
+           usemap="#home"
+           style="width: 100px; height: auto;"/>
       <map name="home">
         <area shape="default" coords="" href="home.php">
       </map>

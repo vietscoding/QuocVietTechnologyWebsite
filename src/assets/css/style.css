@@ -26,13 +26,7 @@
 
 
 
-#logo {
-  display: inline-block; 
-  float: none; 
-  width: 100px; 
-  max-width: 20vw; 
-  margin: 20px auto;
-}
+
 /* Responsive login form */
 
 @media only screen and (max-width: 300) {
@@ -80,8 +74,34 @@
   float: right;
 }
 
-#btnLogin:hover {
+#btnLogin,#btnRegister:hover {
   background-color: #2e8b24;
   transition: background-color 0.3s ease;
   cursor: pointer;
+}
+
+
+.nav-item {
+  margin: 0 10px;
+  background-color: var(--accent-color);
+
+}
+
+.nav-item a.nav-link {
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 15px;
+  display: block;
+  font-weight: bold;
+
+}
+
+#main-content {
+  background-color: red;
+}
+
+
+.nav-item:hover {
+  background-color: var(--accent-hover-color);
+  transition: background-color 0.3s ease;
 }

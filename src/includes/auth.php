@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../includes/db.php'; // Đảm bảo bạn đã có file kết nối DB
+require_once './db.php'; // Đảm bảo bạn đã có file kết nối DB
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
@@ -16,9 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // So sánh mật khẩu
         if (password_verify($password, $user['password'])) {
             // Đăng nhập thành công
+            // echo "Đăng nhập thành công!";
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['email'] = $user['email'];
-            header("Location: ../dashboard.php");
+            header("Location: ../home.php"); // Chuyển hướng đến trang chính
             exit();
         } else {
             $error = "Sai mật khẩu.";
