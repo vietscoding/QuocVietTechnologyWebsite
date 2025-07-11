@@ -38,6 +38,17 @@
     
   }
 }
+/* 
+a.navbar-brand img.img-fluid {
+  width: 100px;
+  height: auto;
+  margin-right: 20px;
+} */
+
+a.navbar-brand {
+  margin-right: 50px;
+
+}
 
 /* Format login box */
 
@@ -84,7 +95,9 @@
 .nav-item {
   margin: 0 10px;
   background-color: var(--accent-color);
-
+  border-radius: 10px;
+  margin-bottom: 1em;
+  /* margin-top: 1em; */
 }
 
 .nav-item a.nav-link {
@@ -93,15 +106,16 @@
   padding: 10px 15px;
   display: block;
   font-weight: bold;
-
+  /* background-color: red; */
+  /* border-radius: 20px; */
+  /* color: black; */
 }
 
-#main-content {
-  background-color: red;
-}
 
 
 .nav-item:hover {
   background-color: var(--accent-hover-color);
   transition: background-color 0.3s ease;
 }
+
+
