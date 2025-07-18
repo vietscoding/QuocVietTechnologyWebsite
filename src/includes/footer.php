@@ -36,9 +36,14 @@
     .footer.justify-content-center {
         margin-top: 5em;
     }
+
+    #the-footer {
+        position: sticky;
+        z-index: 1000;
+    }
 </style>
 
-<footer class="footer justify-content-center" style="background-color: #f8f9fa; padding: 20px; text-align: center;">
+<footer class="footer justify-content-center" id="the-footer" style="background-color: #f8f9fa; padding: 20px; text-align: center;">
     <div class="footer-content">
         <div class="footer-section" style="display: inline-block; margin-right: 50px;">
             <h4>Policy</h4>

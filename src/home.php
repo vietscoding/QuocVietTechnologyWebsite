@@ -32,7 +32,7 @@
 <body id="body">
 
   <?php
-  $current_page = "       home";
+  $current_page = "home";
   include 'includes/header.php';
   ?>
 

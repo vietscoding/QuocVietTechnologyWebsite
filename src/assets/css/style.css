@@ -86,27 +86,3 @@ a.navbar-brand {
   transition: background-color 0.3s ease;
   cursor: pointer;
 }
-
-.nav-item {
-  margin: 0 10px;
-  background-color: var(--accent-color);
-  border-radius: 10px;
-  margin-bottom: 1em;
-  /* margin-top: 1em; */
-}
-
-.nav-item a.nav-link {
-  color: #fff;
-  text-decoration: none;
-  padding: 10px 15px;
-  display: block;
-  font-weight: bold;
-  /* background-color: red; */
-  /* border-radius: 20px; */
-  /* color: black; */
-}
-
-.nav-item:hover {
-  background-color: var(--accent-hover-color);
-  transition: background-color 0.3s ease;
-}
