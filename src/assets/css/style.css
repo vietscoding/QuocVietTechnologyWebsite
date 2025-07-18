@@ -10,7 +10,7 @@
   --shadow-color: rgba(0, 0, 0, 0.2);
   --footer-color: #666;
 }
-.dark-theme{
+.dark-theme {
   --background-color: hsl(0, 0%, 15%);
   --box-background: #323232;
   --text-color: #fff;
@@ -23,10 +23,6 @@
   --footer-color: #aaa;
 }
 
-
-
-
-
 /* Responsive login form */
 
 @media only screen and (max-width: 300) {
@@ -35,7 +31,6 @@
     padding: 10px;
     padding-top: 20px;
     padding-bottom: 50px;
-    
   }
 }
 /* 
@@ -47,12 +42,12 @@ a.navbar-brand img.img-fluid {
 
 a.navbar-brand {
   margin-right: 50px;
-
 }
 
 /* Format login box */
 
-#login-form, #register-form {
+#login-form,
+#register-form {
   max-width: 400px;
   margin: auto;
   padding: 20px;
@@ -74,8 +69,8 @@ a.navbar-brand {
   margin-top: 1.5rem !important;
 }
 
-
-#btnLogin, #btnRegister { 
+#btnLogin,
+#btnRegister {
   /* background-color: #37a931;
   color: #fff;
   border: none;
@@ -85,12 +80,12 @@ a.navbar-brand {
   float: right;
 }
 
-#btnLogin,#btnRegister:hover {
+#btnLogin,
+#btnRegister:hover {
   background-color: #2e8b24;
   transition: background-color 0.3s ease;
   cursor: pointer;
 }
-
 
 .nav-item {
   margin: 0 10px;
@@ -111,11 +106,7 @@ a.navbar-brand {
   /* color: black; */
 }
 
-
-
 .nav-item:hover {
   background-color: var(--accent-hover-color);
   transition: background-color 0.3s ease;
 }
-
-

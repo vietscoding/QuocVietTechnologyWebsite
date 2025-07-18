@@ -1,27 +1,26 @@
 .nav-link {
-    color: #000000;
-    border-radius: 5px;
+  color: #000000;
+  border-radius: 5px;
 }
 
 .nav-item {
-    margin-right: 5px;
+  margin-right: 5px;
 }
 
 .nav-link:hover {
-    background-color:rgb(126, 197, 51);
-    color: #ffffff;
-    text-decoration: none;
-    transition: all 0.2s ease;
-    /* border-radius: 10px; */
+  background-color: rgb(126, 197, 51);
+  color: #ffffff;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  /* border-radius: 10px; */
 }
 
 .active {
-    /* background-color: rgb(77, 157, 28); */
-    border-bottom: 5px solid rgb(77, 157, 28);
-    color: #000000;
+  /* background-color: rgb(77, 157, 28); */
+  border-bottom: 5px solid rgb(77, 157, 28);
+  color: #000000;
 }
 
 .navbar {
-    padding: 0;
+  padding: 0;
 }
-

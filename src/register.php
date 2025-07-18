@@ -1,28 +1,34 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sign up - Quoc Viet Technology</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
   <link rel="stylesheet" href="./assets/css/style.css" />
 </head>
+
 <body class="<?= $bodyClass ?>">
   <header>
-    <div class="container-fluid" style="text-align: center;">
-      <img src="../src/assets/images/new_quocvietlogo.png" 
-           alt="Home - Quoc Viet Technology"
-           title="Home - Quoc Viet Technology"
-           id="logo"
-           usemap="#home"/>
+    <!-- <div class="container-fluid" style="text-align: center;">
+      <img src="../src/assets/images/new_quocvietlogo.png"
+        alt="Home - Quoc Viet Technology"
+        title="Home - Quoc Viet Technology"
+        id="logo"
+        usemap="#home"
+        style="width: 100px; height: auto;" />
       <map name="home">
         <area shape="default" coords="" href="home.php">
       </map>
-    </div>  
-
+    </div> -->
+    <div class="container-fluid" style="text-align: center;">
+      <a href="home.php" class="navbar-brand">
+        <img class="img-fluid" src="assets/images/new_quocvietlogo.png" alt="Logo" style="width: 100px; height: auto;">
+      </a>
+    </div>
   </header>
-  <div class="container mt-5" id="register-form" >
+  <div class="container mt-5" id="register-form">
     <h2 style="text-align: center;">Sign Up</h2>
     <form action="./includes/auth.php" method="POST" autocomplete="off">
       <div class="form-floating mb-3 mt-3">
@@ -48,8 +54,9 @@
     </div>
   </div>
 
-<?php include '../src/includes/footer.php'; ?>  
+  <?php include '../src/includes/footer.php'; ?>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
   <script src="assets/js/theme.js"></script>
 </body>
+
 </html>

@@ -1,28 +1,30 @@
 <!DOCTYPE html>
-<html lang="en" >
-  <!-- data-bs-theme="dark" -->
+<html lang="en">
+<!-- data-bs-theme="dark" -->
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login - Quoc Viet Technology</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
   <link rel="stylesheet" href="./assets/css/style.css">
 
 </head>
+
 <body>
   <header>
     <div class="container-fluid" style="text-align: center;">
-      <img src="../src/assets/images/new_quocvietlogo.png" 
-           alt="Home - Quoc Viet Technology"
-           title="Home - Quoc Viet Technology"
-           id="logo"
-           usemap="#home"
-           style="width: 100px; height: auto;"/>
+      <img src="../src/assets/images/new_quocvietlogo.png"
+        alt="Home - Quoc Viet Technology"
+        title="Home - Quoc Viet Technology"
+        id="logo"
+        usemap="#home"
+        style="width: 100px; height: auto;" />
       <map name="home">
         <area shape="default" coords="" href="home.php">
       </map>
-    </div>  
-    
+    </div>
+
   </header>
 
   <!-- <div class="login-box">
@@ -45,7 +47,7 @@
 
   <div class="container mt-5" id="login-form">
     <h2 style="text-align: center;">Login</h2>
-    <form action="./includes/auth.php" method="POST" >
+    <form action="./includes/auth.php" method="POST">
       <div class="form-floating mb-3 mt-3">
         <input type="text" class="form-control" name="email" id="email" placeholder="Email" required />
         <label for="email">Email</label>
@@ -65,4 +67,5 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
   <script src="./assets/js/theme.js"></script>
 </body>
+
 </html>

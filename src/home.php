@@ -1,13 +1,14 @@
 <!-- index.php -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home | Quoc Viet Technology</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
   <link rel="stylesheet" href="assets/css/style.css">
-   <style>
+  <style>
     /* body {
       background-color: red;
     } 
@@ -27,15 +28,16 @@
     } */
   </style>
 </head>
+
 <body id="body">
 
-  <?php 
-      $current_page = "home";
-      include 'includes/header.php';  
+  <?php
+  $current_page = "       home";
+  include 'includes/header.php';
   ?>
 
   <main>
-    
+
     <div id="demo" class="carousel slide" data-bs-ride="carousel">
       <!-- Indicators/dots -->
       <div class="carousel-indicators">
@@ -50,11 +52,11 @@
           <img src="assets/images/promotions/promotion1.jpg" alt="Promotion 1" class="d-block w-100">
         </div>
         <div class="carousel-item">
-          <img src="assets/images/promotions/promotion2.jpg" alt="Promotion 2" class="d-block w-100">
+          <img src="assets/images/promotions/promotion2.jpg" alt="Promotion s2" class="d-block w-100">
         </div>
         <div class="carousel-item">
           <img src="assets/images/promotions/promotion3.jpg" alt="Promotion 3" class="d-block w-100">
-        </div>  
+        </div>
       </div>
 
       <!-- Left and right controls/icons -->
@@ -86,7 +88,7 @@
             </div>
           </div>
         </div>
-        
+
         <div class="col-md-4 mb-4">
           <div class="card">
             <img src="assets/images/promotions/promotion1.jpg" class="card-img-top" alt="Product 1">
@@ -97,7 +99,7 @@
             </div>
           </div>
         </div>
-        
+
         <div class="col-md-4 mb-4">
           <div class="card">
             <img src="assets/images/promotions/promotion1.jpg" class="card-img-top" alt="Product 1">
@@ -131,4 +133,5 @@
   <script src="assets/js/script.js"></script>
 
 </body>
+
 </html>
