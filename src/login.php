@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <!-- data-bs-theme="dark" -->
@@ -47,7 +50,8 @@
 
   <div class="container mt-5" id="login-form">
     <h2 style="text-align: center;">Login</h2>
-    <form action="./includes/auth.php" method="POST">
+
+    <form action="./includes/authDemo.php" method="POST">
       <div class="form-floating mb-3 mt-3">
         <input type="text" class="form-control" name="email" id="email" placeholder="Email" required />
         <label for="email">Email</label>
@@ -57,7 +61,17 @@
         <input type="password" class="form-control" name="password" id="password" placeholder="Password" required />
         <label for="password">Password</label>
       </div>
-      <span>Don't have an account? <a href="register.php" class="text-primary">Sign up</a></span>
+      <?php if (isset($_SESSION['success'])): ?>
+        <div class="alert alert-success"><?php echo htmlspecialchars($_SESSION['success']);
+                                          unset($_SESSION['success']); ?></div>
+      <?php endif; ?>
+      <?php if (isset($_SESSION['error'])): ?>
+        <div class="alert alert-danger"><?php echo htmlspecialchars($_SESSION['error']);
+                                        unset($_SESSION['error']); ?></div>
+      <?php endif; ?>
+      <span>Don't have an account? <a href="registerDemo.php" class="text-primary">Sign up</a></span>
+
+      <input type="hidden" name="login" value="1" />
       <button type="submit" class="btn btn-success" id="btnLogin">Log In</button>
     </form>
 
