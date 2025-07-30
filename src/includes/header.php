@@ -47,7 +47,9 @@
 
   #the-header {
     position: sticky;
+    top: 0;
     z-index: 1000;
+    background-color: var(--bg-color);
   }
 
   /* Tuỳ chỉnh dropdown đa cấp */
@@ -77,15 +79,6 @@
 
 
 <header class="header" id="the-header">
-  <!-- <nav>
-    <ul class="header-nav">
-      <li><a href="home.php" style="text-decoration: none;">Home</a></li>
-      <li><a href="contact.php" style="text-decoration: none;">Contact Us</a></li>
-      <li><a href="cart.php" style="text-decoration: none;">My Cart</a></li>
-      <li><a href="profile.php" style="text-decoration: none;">Profile</a></li>
-      <li><a href="login.php" style="text-decoration: none;">Login</a></li>
-    </ul>
-  </nav> -->
   <div>
     <nav class="navbar navbar-expand-sm bg-light justify-content-end">
       <a href="home.php" class="navbar-brand" style="margin-left: 1em">
@@ -122,19 +115,23 @@
           <li class="nav-item">
             <a class="nav-link <?= ($current_page == 'cart') ? 'active' : '' ?>" href="cart.php">My Cart</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link <?= ($current_page == 'profile') ? 'active' : '' ?>" href="profile.php">Profile</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="login.php">Login</a>
-          </li>
+          <?php if (isset($_SESSION['user_id'])): ?>
+
+            <li class="nav-item">
+              <a class="nav-link <?= ($current_page == 'profile') ? 'active' : '' ?>" href="profile.php">Profile</a>
+            </li>
+          <?php else: ?>
+            <li class="nav-item">
+              <a class="nav-link" href="login.php">Login</a>
+            </li>
+          <?php endif; ?>
         </ul>
       </div>
 
-      <!-- Secondary Navigation -->
 
     </nav>
   </div>
+  <!-- Secondary Navigation -->
 
   <div class="container-fluid">
     <ul class="nav">
@@ -150,7 +147,7 @@
               <a class="dropdown-item dropdown-toggle" href="#">Brands</a>
               <ul class="dropdown-menu">
                 <!-- Apple -->
-                <li class="dropdown-submenu">
+                <!-- <li class="dropdown-submenu">
                   <a class="dropdown-item dropdown-toggle" href="#">
                     <img src="../public/images/brand_logo/apple.png" alt="Apple Logo"> Apple (Macbook)
                   </a>
@@ -165,7 +162,7 @@
                     <li><a class="dropdown-item" href="#">MacBook Air</a></li>
                     <li><a class="dropdown-item" href="#">MacBook Pro</a></li>
                   </ul>
-                </li>
+                </li> -->
 
                 <!-- Acer -->
                 <li class="dropdown-submenu">
@@ -268,11 +265,11 @@
             <li class="dropdown-submenu">
               <a class="dropdown-item dropdown-toggle" href="#">Needs</a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">High-end - Luxury</a></li>
-                <li><a class="dropdown-item" href="#">Study - Office</a></li>
-                <li><a class="dropdown-item" href="#">Graphics - Engineering</a></li>
-                <li><a class="dropdown-item" href="#">Gaming</a></li>
-                <li><a class="dropdown-item" href="#">Thin and Light - Fashion</a></li>
+                <li><a class="dropdown-item" href="product_searcher.php">High-end - Luxury</a></li>
+                <li><a class="dropdown-item" href="product_searcher.php">Study - Office</a></li>
+                <li><a class="dropdown-item" href="product_searcher.php">Graphics - Engineering</a></li>
+                <li><a class="dropdown-item" href="product_searcher.php">Gaming</a></li>
+                <li><a class="dropdown-item" href="product_searcher.php">Thin and Light - Fashion</a></li>
               </ul>
             </li>
 
@@ -292,10 +289,10 @@
           </ul>
         </div>
       </li>
-      <li class="nav-item"><a class="nav-link" href="about.php">Best Sellers</a></li>
-      <li class="nav-item"><a class="nav-link" href="services.php">Brands</a></li>
-      <li class="nav-item"><a class="nav-link" href="blog.php">Fantastic Deals</a></li>
-      <li class="nav-item"><a class="nav-link" href="blog.php">High-end Laptops</a></li>
+      <li class="nav-item"><a class="nav-link" href="product_searcher.php">Best Sellers</a></li>
+      <li class="nav-item"><a class="nav-link" href="product_searcher.php">Brands</a></li>
+      <li class="nav-item"><a class="nav-link" href="product_searcher.php">Fantastic Deals</a></li>
+      <li class="nav-item"><a class="nav-link" href="product_searcher.php">High-end Laptops</a></li>
     </ul>
   </div>
 </header>

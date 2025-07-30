@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // echo "Đăng nhập thành công!";
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['email'] = $user['email'];
-            header("Location: src/home.php"); // Chuyển hướng đến trang chính
+            header("Location: ../src/home.php"); // Chuyển hướng đến trang chính
             exit();
         } else {
             $error = "Sai mật khẩu.";
