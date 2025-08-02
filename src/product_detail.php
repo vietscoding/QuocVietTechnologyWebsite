@@ -1,8 +1,14 @@
 <?php
 session_start();
-include 'includes/db.php';
+include './includes/db.php';
+
+if (isset($_SESSION['cart_notification']) && ($_SESSION["cart_notification"] == true)) {
+    echo '<script>alert("Successfully");</script>';
+    $_SESSION["cart_notification"] = false; // reset lại
+}
 
 $current_page = "product_detail";
+$_SESSION['return_to'] = $_SERVER['REQUEST_URI'];
 
 // Lấy sản phẩm từ database theo id, fallback to session if id is missing
 $product = null;
@@ -43,67 +49,67 @@ if ($image_result && $image_result->num_rows > 0) {
 }
 
 // Handle Add to Cart
-$user_id = $_SESSION['user_id'] ?? null;
-$show_notification = false;
-if (isset($_POST['add_to_cart']) && isset($_POST['product_id'])) {
-    if (!$user_id) {
-        header("Location: login.php");
-        exit();
-    }
-    $product_id = (int)$_POST['product_id'];
-    if (!isset($_SESSION['cart'])) {
-        $_SESSION['cart'] = array();
-    }
-    $found = false;
-    foreach ($_SESSION['cart'] as &$item) {
-        if ($item['id'] == $product_id) {
-            $item['quantity'] += 1;
-            $found = true;
-            break;
-        }
-    }
-    if (!$found) {
-        $_SESSION['cart'][] = array(
-            'id' => $product_id,
-            'name' => $product['name'],
-            'price' => $product['price'],
-            'quantity' => 1
-        );
-    }
-    // If user is logged in, migrate to database
-    if ($user_id) {
-        // Get or create cart for user
-        $sql_cart = "SELECT id FROM carts WHERE user_id = $user_id";
-        $cart_result = $conn->query($sql_cart);
-        $cart_id = null;
-        if ($cart_result && $cart_result->num_rows > 0) {
-            $cart = $cart_result->fetch_assoc();
-            $cart_id = $cart['id'];
-        } else {
-            $sql_insert_cart = "INSERT INTO carts (user_id, created_at, updated_at) VALUES ($user_id, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
-            $conn->query($sql_insert_cart);
-            $cart_id = $conn->insert_id;
-        }
-        // Update or insert cart items
-        foreach ($_SESSION['cart'] as $item) {
-            $sql_check = "SELECT * FROM cart_items WHERE cart_id = $cart_id AND product_id = " . $item['id'];
-            $result_check = $conn->query($sql_check);
-            if ($result_check && $result_check->num_rows > 0) {
-                $cart_item = $result_check->fetch_assoc();
-                $new_quantity = $cart_item['quantity'] + $item['quantity'];
-                $sql_update = "UPDATE cart_items SET quantity = $new_quantity WHERE cart_id = $cart_id AND product_id = " . $item['id'];
-                $conn->query($sql_update);
-            } else {
-                $sql_insert = "INSERT INTO cart_items (cart_id, product_id, quantity) VALUES ($cart_id, " . $item['id'] . ", " . $item['quantity'] . ")";
-                $conn->query($sql_insert);
-            }
-        }
-        $_SESSION['cart'] = array(); // Clear session cart after migration
-        $show_notification = true; // Set flag to show notification
-    }
-    header("Location: product_detail.php?id=" . $product_id . "&added=1");
-    exit();
-}
+// $user_id = $_SESSION['user_id'] ?? null;
+// $show_notification = false;
+// if (isset($_POST['add_to_cart']) && isset($_POST['product_id'])) {
+//     if (!$user_id) {
+//         header("Location: login.php");
+//         exit();
+//     }
+//     $product_id = (int)$_POST['product_id'];
+//     if (!isset($_SESSION['cart'])) {
+//         $_SESSION['cart'] = array();
+//     }
+//     $found = false;
+//     foreach ($_SESSION['cart'] as &$item) {
+//         if ($item['id'] == $product_id) {
+//             $item['quantity'] += 1;
+//             $found = true;
+//             break;
+//         }
+//     }
+//     if (!$found) {
+//         $_SESSION['cart'][] = array(
+//             'id' => $product_id,
+//             'name' => $product['name'],
+//             'price' => $product['price'],
+//             'quantity' => 1
+//         );
+//     }
+//     // If user is logged in, migrate to database
+//     if ($user_id) {
+//         // Get or create cart for user
+//         $sql_cart = "SELECT id FROM carts WHERE user_id = $user_id";
+//         $cart_result = $conn->query($sql_cart);
+//         $cart_id = null;
+//         if ($cart_result && $cart_result->num_rows > 0) {
+//             $cart = $cart_result->fetch_assoc();
+//             $cart_id = $cart['id'];
+//         } else {
+//             $sql_insert_cart = "INSERT INTO carts (user_id, created_at, updated_at) VALUES ($user_id, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
+//             $conn->query($sql_insert_cart);
+//             $cart_id = $conn->insert_id;
+//         }
+//         // Update or insert cart items
+//         foreach ($_SESSION['cart'] as $item) {
+//             $sql_check = "SELECT * FROM cart_items WHERE cart_id = $cart_id AND product_id = " . $item['id'];
+//             $result_check = $conn->query($sql_check);
+//             if ($result_check && $result_check->num_rows > 0) {
+//                 $cart_item = $result_check->fetch_assoc();
+//                 $new_quantity = $cart_item['quantity'] + $item['quantity'];
+//                 $sql_update = "UPDATE cart_items SET quantity = $new_quantity WHERE cart_id = $cart_id AND product_id = " . $item['id'];
+//                 $conn->query($sql_update);
+//             } else {
+//                 $sql_insert = "INSERT INTO cart_items (cart_id, product_id, quantity) VALUES ($cart_id, " . $item['id'] . ", " . $item['quantity'] . ")";
+//                 $conn->query($sql_insert);
+//             }
+//         }
+//         $_SESSION['cart'] = array(); // Clear session cart after migration
+//         $show_notification = true; // Set flag to show notification
+//     }
+//     header("Location: ./product_detail.php?id=" . $product_id . "&added=1");
+//     exit();
+// }
 
 // Lấy hình ảnh phụ
 $thumb_sql = "SELECT url FROM product_images WHERE product_id = $product_id AND is_primary = 0 LIMIT 4";
@@ -166,7 +172,7 @@ $thumb_result = $conn->query($thumb_sql);
                         <span class="btn btn-outline-dark btn-sm">White</span>
                     </div>
 
-                    <form method="POST" action="">
+                    <form method="POST" action="./includes/add_product_to_cart_handler.php">
                         <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
                         <button type="submit" name="add_to_cart" class="btn btn-success mt-2">Add to Cart</button>
                     </form>

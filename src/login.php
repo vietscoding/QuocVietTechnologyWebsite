@@ -10,7 +10,7 @@ session_start();
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login - Quoc Viet Technology</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
-  <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/style.css">
 
 </head>
 
@@ -30,28 +30,10 @@ session_start();
 
   </header>
 
-  <!-- <div class="login-box">
-    <h2>Login</h2>
-    <form action="includes/auth.php" method="POST">
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" required />
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" required />
-      </div>
-      <button type="submit" class="login-button">Log In</button>
-    </form>
-    <div class="footer" style="margin-top: 20px;">
-      Don't have an account? <a href="register.php">Sign up</a>
-    </div>
-  </div> -->
-
   <div class="container mt-5" id="login-form">
     <h2 style="text-align: center;">Login</h2>
 
-    <form action="./includes/authDemo.php" method="POST">
+    <form action="./includes/auth.php" method="POST">
       <div class="form-floating mb-3 mt-3">
         <input type="text" class="form-control" name="email" id="email" placeholder="Email" required />
         <label for="email">Email</label>
@@ -69,7 +51,7 @@ session_start();
         <div class="alert alert-danger"><?php echo htmlspecialchars($_SESSION['error']);
                                         unset($_SESSION['error']); ?></div>
       <?php endif; ?>
-      <span>Don't have an account? <a href="registerDemo.php" class="text-primary">Sign up</a></span>
+      <span>Don't have an account? <a href="register.php" class="text-primary">Sign up</a></span>
 
       <input type="hidden" name="login" value="1" />
       <button type="submit" class="btn btn-success" id="btnLogin">Log In</button>

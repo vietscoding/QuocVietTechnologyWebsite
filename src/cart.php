@@ -1,140 +1,93 @@
 <?php
 session_start();
-?>
+include 'includes/db.php';
 
+$user_id = $_SESSION['user_id'] ?? null;
+$cart_items = array();
+
+// Kiểm tra giỏ hàng trong database
+if ($user_id) {
+    // Get the cart ID for the user
+    $sql_cart = "SELECT id FROM carts WHERE user_id = $user_id";
+    $cart_result = $conn->query($sql_cart);
+    if ($cart_result && $cart_result->num_rows > 0) {
+        $cart = $cart_result->fetch_assoc();
+        $cart_id = $cart['id'];
+        // Get items from cart_items
+        $sql_items = "SELECT ci.product_id, ci.quantity, p.name, p.price, p.brand, pi.url as main_image 
+                      FROM cart_items ci 
+                      JOIN products p ON ci.product_id = p.id 
+                      JOIN product_images pi ON p.id = pi.product_id AND pi.is_primary = 1 
+                      WHERE ci.cart_id = $cart_id";
+        $items_result = $conn->query($sql_items);
+        if ($items_result && $items_result->num_rows > 0) {
+            while ($row = $items_result->fetch_assoc()) {
+                $cart_items[] = $row;
+            }
+        }
+    }
+} else {
+    // Redirect to login if not logged in
+    header("Location: login.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cart</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <title>Shopping Cart</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="assets/css/style.css">
-
 </head>
 
 <body>
-    <?php
-    $current_page = "cart";
-    include 'includes/header.php';
-    ?>
+    <?php include 'includes/header.php'; ?>
 
     <div class="container mt-4">
-        <div class="row">
-            <div class="col-md-9">
-                <h4 class="mb-3">Shopping Cart (4 items) <span class="float-end"><a href="#" class="text-dark" onclick="removeAll()">Remove All <i class="bi bi-trash"></i></a></span></h4>
-                <!-- Cart Items -->
-                <div id="cart-items">
-                    <!-- Item 1 -->
-                    <div class="card mb-3 p-3" style="background:#d3d3d3;">
-                        <div class="row g-0 align-items-center">
-                            <div class="col-md-2 text-center">
-                                <img src="assets/images/product_placeholder.png" alt="Product" style="width:100px;height:100px;background:#eee;border-radius:8px;object-fit:cover;">
-                            </div>
-                            <div class="col-md-6">
-                                <div><b>Name, Screen Size, CPU, RAM, Storage, OS, SKU, ádfasdfsfdsdf ffffffff ffffffsdf asdff ffasdfjqw erjiskjvdks dsfh jkvhkdhfk jdshfweuif ysiudcvhkj hgfioe</b></div>
-                                <div class="text-muted" style="font-size:13px;text-decoration:line-through;">$249.99</div>
-                                <div style="font-size:20px;font-weight:bold;">$299.99</div>
-                                <div class="text-success" style="font-size:13px;">Save: $50.00 (16%)</div>
-                            </div>
-                            <div class="col-md-2 text-center">
-                                <div class="input-group mb-2" style="width:120px;">
-                                    <button class="btn btn-outline-dark" type="button">-</button>
-                                    <input type="text" class="form-control text-center" value="1" style="width:40px;">
-                                    <button class="btn btn-outline-dark" type="button">+</button>
-                                </div>
-                                <button class="btn btn-outline-dark w-100" type="button">Remove <i class="bi bi-trash"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Item 2 -->
-                    <div class="card mb-3 p-3" style="background:#d3d3d3;">
-                        <div class="row g-0 align-items-center">
-                            <div class="col-md-2 text-center">
-                                <img src="assets/images/product_placeholder.png" alt="Product" style="width:100px;height:100px;background:#eee;border-radius:8px;object-fit:cover;">
-                            </div>
-                            <div class="col-md-6">
-                                <div><b>Name, Screen Size, CPU, RAM, Storage, OS, SKU, ádfasdfsfdsdf ffffffff ffffffsdf asdff ffasdfjqw erjiskjvdks dsfh jkvhkdhfk jdshfweuif ysiudcvhkj hgfioe</b></div>
-                                <div style="font-size:20px;font-weight:bold;">$19999.99</div>
-                            </div>
-                            <div class="col-md-2 text-center">
-                                <div class="input-group mb-2" style="width:120px;">
-                                    <button class="btn btn-outline-dark" type="button">-</button>
-                                    <input type="text" class="form-control text-center" value="1" style="width:40px;">
-                                    <button class="btn btn-outline-dark" type="button">+</button>
-                                </div>
-                                <button class="btn btn-outline-dark w-100" type="button">Remove <i class="bi bi-trash"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Item 3 -->
-                    <div class="card mb-3 p-3" style="background:#d3d3d3;">
-                        <div class="row g-0 align-items-center">
-                            <div class="col-md-2 text-center">
-                                <img src="assets/images/product_placeholder.png" alt="Product" style="width:100px;height:100px;background:#eee;border-radius:8px;object-fit:cover;">
-                            </div>
-                            <div class="col-md-6">
-                                <div><b>Name, Screen Size, CPU, RAM, Storage, OS, SKU, ádfasdfsfdsdf ffffffff ffffffsdf asdff ffasdfjqw erjiskjvdks dsfh jkvhkdhfk jdshfweuif ysiudcvhkj hgfioe</b></div>
-                                <div class="text-muted" style="font-size:13px;text-decoration:line-through;">$249.99</div>
-                                <div style="font-size:20px;font-weight:bold;">$299.99</div>
-                                <div class="text-success" style="font-size:13px;">Save: $50.00 (16%)</div>
-                            </div>
-                            <div class="col-md-2 text-center">
-                                <div class="input-group mb-2" style="width:120px;">
-                                    <button class="btn btn-outline-dark" type="button">-</button>
-                                    <input type="text" class="form-control text-center" value="1" style="width:40px;">
-                                    <button class="btn btn-outline-dark" type="button">+</button>
-                                </div>
-                                <button class="btn btn-outline-dark w-100" type="button">Remove <i class="bi bi-trash"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Item 4 -->
-                    <div class="card mb-3 p-3" style="background:#d3d3d3;">
-                        <div class="row g-0 align-items-center">
-                            <div class="col-md-2 text-center">
-                                <img src="assets/images/product_placeholder.png" alt="Product" style="width:100px;height:100px;background:#eee;border-radius:8px;object-fit:cover;">
-                            </div>
-                            <div class="col-md-6">
-                                <div><b>Name, Screen Size, CPU, RAM, Storage, OS, SKU, ádfasdfsfdsdf ffffffff ffffffsdf asdff ffasdfjqw erjiskjvdks dsfh jkvhkdhfk jdshfweuif ysiudcvhkj hgfioe</b></div>
-                                <div style="font-size:20px;font-weight:bold;">$299.99</div>
-                            </div>
-                            <div class="col-md-2 text-center">
-                                <div class="input-group mb-2" style="width:120px;">
-                                    <button class="btn btn-outline-dark" type="button">-</button>
-                                    <input type="text" class="form-control text-center" value="1" style="width:40px;">
-                                    <button class="btn btn-outline-dark" type="button">+</button>
-                                </div>
-                                <button class="btn btn-outline-dark w-100" type="button">Remove <i class="bi bi-trash"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Summary -->
-            <div class="col-md-3">
-                <div class="card p-3" style="background:#cfcfcf;">
-                    <h5>Summary</h5>
-                    <div class="mb-2">Item(s): <span class="float-end">$259.99</span></div>
-                    <div class="mb-2">Promo discount: <span class="float-end text-danger">-$30.00</span></div>
-                    <hr>
-                    <div class="mb-3" style="font-size:20px;font-weight:bold;">Est. Total: <span class="float-end">$229.99</span></div>
-                    <button class="btn btn-dark w-100">Checkout</button>
-                </div>
-            </div>
-        </div>
+        <h2>Shopping Cart</h2>
+        <?php if (empty($cart_items)): ?>
+            <p>Your cart is empty.</p>
+        <?php else: ?>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($cart_items as $item): ?>
+                        <tr>
+                            <td><img src="<?= htmlspecialchars($item['main_image']) ?>" style="width:50px;height:50px;object-fit:contain;"></td>
+                            <td><?= htmlspecialchars($item['name']) ?> (<?= htmlspecialchars($item['brand']) ?>)</td>
+                            <td>$<?= number_format($item['price'], 2) ?></td>
+                            <td><?= htmlspecialchars($item['quantity']) ?></td>
+                            <td>$<?= number_format($item['price'] * $item['quantity'], 2) ?></td>
+                            <td><a href="remove_from_cart.php?cart_id=<?= $cart_id ?>&product_id=<?= $item['product_id'] ?>" class="btn btn-danger btn-sm">Remove</a></td>
+                        </tr>
+                    <?php endforeach; ?>
+                    <tr>
+                        <td colspan="4"><strong>Total</strong></td>
+                        <td><strong>$<?= number_format(array_sum(array_map(fn($item) => $item['price'] * $item['quantity'], $cart_items)), 2) ?></strong></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            <a href="checkout.php" class="btn btn-success">Proceed to Checkout</a>
+        <?php endif; ?>
     </div>
 
-    <script>
-        function removeAll() {
-            if (confirm('Remove all items from cart?')) {
-                document.getElementById('cart-items').innerHTML = '<div class="alert alert-info">Your cart is empty.</div>';
-            }
-        }
-    </script>
-
     <?php include 'includes/footer.php'; ?>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/script.js"></script>
+</body>
+
+</html>

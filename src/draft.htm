@@ -4,26 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <style>
-      :root {
-        --bg-color: #ffffff;
-        --text-color: #000000;
-      }
-
-      /* Dark Theme */
-      [data-theme="dark"] {
-        --bg-color: #1e1e1e;
-        --text-color: #ffffff;
-      }
-
-      body {
-        background-color: var(--bg-color);
-        color: var(--text-color);
-      }
-    </style>
+    <style></style>
   </head>
   <body>
-    <button id="themeToggle">Change Theme</button>
-    <script src="assets/js/theme.js"></script>
+    <button onclick="showMessage()">Click me!</button>
+    <script>
+      function showMessage() {
+        alert("Add to Cart Successfully!");
+      }
+    </script>
   </body>
 </html>

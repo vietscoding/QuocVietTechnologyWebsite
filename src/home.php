@@ -1,5 +1,12 @@
 <?php
+ini_set('session.gc_maxlifetime', 900); // 900 giây = 15 phút
+session_set_cookie_params(900); // Cookie session cũng hết sau 15 phút
 session_start();
+
+if (isset($_SESSION['cart_notification']) && ($_SESSION["cart_notification"] == true)) {
+  echo '<script>alert("Successfully");</script>';
+  $_SESSION["cart_notification"] = false; // reset lại
+}
 ?>
 
 <!-- index.php -->
@@ -13,10 +20,6 @@ session_start();
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
   <link rel="stylesheet" href="../src/assets/css/style.css">
   <style>
-    body {
-      background-color: red;
-    }
-
     .product-container {
       display: flex;
       flex-wrap: wrap;
@@ -157,22 +160,6 @@ session_start();
 
     }
 
-    :root {
-      --bg-color: #ffffff;
-      --text-color: #000000;
-    }
-
-    [data-theme="dark"] {
-      --bg-color: #1a1a1a;
-      --text-color: #f0f0f0;
-    }
-
-    body {
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      /* transition: background-color 0.3s, color 0.3s; */
-    }
-
 
     .nav-item {
       margin: 0 10px;
@@ -235,9 +222,13 @@ session_start();
 
     #featured-laptops,
     #fantastic-deals,
-    #high-end-laptops  { 
+    #high-end-laptops {
       margin-left: 10rem;
       margin-right: 10rem;
+    }
+
+    a.float-end {
+      text-decoration: none;
     }
 
     /* 
@@ -268,7 +259,7 @@ session_start();
 
     <!-- Brands -->
     <div class="container mb-4">
-      <h5>Brands available at Quoc Viet Laptops <a href="#" " style=" font-size:14px; justify-content: flex-start;"> See more ></a></h5>
+      <h3>Brands available at Quoc Viet Laptops <a href="product_searcher.php" class="float-end" style=" font-size:14px;"> See more ></a></h3>
       <div class="row g-3">
         <a href="product_searcher.php" class="brands col-8 col-md-2 text-center">
           <div class="col-8 col-md-2 text-center "><img src="../public/images/brand_logo/acer.png" style="width:30px;"></div>
@@ -295,9 +286,9 @@ session_start();
       </div>
     </div>
     <!-- Usage Needs Section -->
-    <div class="container mb-4">
+    <div class="container mb-4" style="background:#f5f5f5;">
       <div style="background:#ededed;padding:10px 0;margin-bottom:1rem;">
-        <h3 style="margin:0 1rem 1rem 1rem;">Usage Needs <span class="float-end" style="font-size:14px;">See more &gt;</span></h3>
+        <h3 style="margin:0 1rem 1rem 1rem;">Usage Needs <a href="product_searcher.php" class="float-end" style=" font-size:14px;"> See more ></a></h3>
       </div>
       <div class="usage-need-container" style="display:flex;gap:1.5rem;justify-content:center;align-items:stretch;">
         <!-- Premium / Luxury -->
@@ -312,7 +303,7 @@ session_start();
           padding:16px 8px;
           text-align:center;
           ">
-          <a href="#" class="usage-need-link">
+          <a href="product_searcher.php" class="usage-need-link">
             <div style="background:#a5ffe8;border-radius:8px;padding:8px 0 0 0;margin-bottom:8px;">
               <img src="assets/images/premium.webp" alt="Office" style="width:80px;height:60px;object-fit:contain;">
             </div>
@@ -321,7 +312,7 @@ session_start();
         </div>
         <!-- Student / Office -->
         <div class="usage-need-card" style="flex:1 1 120px;max-width:140px;background:#fff;border:1px solid #e0e0e0;border-radius:8px;box-sizing:border-box;padding:16px 8px;text-align:center;">
-          <a href="#" class="usage-need-link">
+          <a href="product_searcher.php" class="usage-need-link">
             <div style="background:#ffc0ab;border-radius:8px;padding:8px 0 0 0;margin-bottom:8px;">
               <img src="assets/images/study-office.webp" alt="Student" style="width:80px;height:60px;object-fit:contain;">
             </div>
@@ -339,7 +330,7 @@ session_start();
         </div>
         <!-- Graphics -->
         <div class="usage-need-card" style="flex:1 1 120px;max-width:140px;background:#fff;border:1px solid #e0e0e0;border-radius:8px;box-sizing:border-box;padding:16px 8px;text-align:center;">
-          <a href="#" class="usage-need-link">
+          <a href="product_searcher.php" class="usage-need-link">
             <div style="background:#f8ec45;border-radius:8px;padding:8px 0 0 0;margin-bottom:8px;">
               <img src="assets/images/graphics-engineering.webp" alt="Graphics" style="width:80px;height:60px;object-fit:contain;">
             </div>
@@ -348,7 +339,7 @@ session_start();
         </div>
         <!-- Slim & Light -->
         <div class="usage-need-card" style="flex:1 1 120px;max-width:140px;background:#fff;border:1px solid #e0e0e0;border-radius:8px;box-sizing:border-box;padding:16px 8px;text-align:center;">
-          <a href="#" class="usage-need-link">
+          <a href="product_searcher.php" class="usage-need-link">
             <div style="background:#f0c3cf;border-radius:8px;padding:8px 0 0 0;margin-bottom:8px;">
               <img src="assets/images/slim-fashionable.webp" alt="Slim & Fashionable" style="width:80px;height:60px;object-fit:contain;">
             </div>
@@ -358,9 +349,9 @@ session_start();
       </div>
     </div>
     <!-- Featured Laptops -->
-    <div id="featured-laptops">
-      <div style="background:#ededed;padding:10px 0; ">
-        <h3 style="margin:0 1rem 1rem 1rem;">Featured Laptops <span class="float-end" style="font-size:14px;">See more ></span></h3>
+    <div id="featured-laptops" style="margin-bottom: 2rem; border: 1px solid #ddd; ">
+      <div style="background:#ededed;padding:10px 0;">
+        <h3 style="margin:0 1rem 1rem 1rem;">Featured Laptops <a href="product_searcher.php" class="float-end" style=" font-size:14px;"> See more ></a></h3>
       </div>
       <div class="product-container">
 
@@ -391,7 +382,7 @@ session_start();
             echo '  <div class="product-image">';
             echo '    <img src="' . $imgUrl . '" alt="Product Image">';
             echo '  </div>';
-            echo '  <div class="product-rating">★★★★☆</div>';
+            echo '  <div class="product-rating">★★★★★</div>';
             echo '  <div class="product-name">' . $row['name'] . '</div>';
             echo '  <div class="product-description">';
             echo '    <p class="card-text" style="flex-grow:1;min-height:70px;">' . $row['name'] . ' | ' . $row['model'] . ' | ' . $row['screen_size'] . ' | ' . $row['processor'] . ' | ' . $row['graphics'] . ' | ' . $row['memory'] . 'GB | ' . $row['storage'] . '</p>';
@@ -408,9 +399,10 @@ session_start();
             echo '  <div class="product-price">$' . number_format($row['price'], 2) . '</div>';
 
             echo '  </a>';
-            echo '  <div class="add-to-cart-button">';
-            echo '    <button class="add-to-cart">Add to Cart</button>';
-            echo '  </div>';
+            echo '  <form method="POST" action="./includes/add_product_to_cart_handler.php" class="add-to-cart-button">';
+            echo '    <input type="hidden" name="product_id" value="' . $row['id'] . '">';
+            echo '    <button type="submit" name="add_to_cart" class="add-to-cart">Add to Cart</button>';
+            echo '  </form>';
             echo '</div>';
           }
         } else {
@@ -423,9 +415,9 @@ session_start();
     </div>
 
     <!-- Fantastic Deals -->
-    <div id="fantastic-deals">
-      <div>
-        <h5>Fantastic Deals <span class="float-end" style="font-size:14px;">See more ></span></h5>
+    <div id="fantastic-deals" style="margin-bottom: 2rem; border: 1px solid #ddd; ">
+      <div style="background:#ededed;padding:10px 0; ">
+        <h3 style="margin:0 1rem 1rem 1rem;">Fantastic Deals <a href="product_searcher.php" class="float-end" style=" font-size:14px;"> See more ></a></h3>
       </div>
       <div class="product-container">
 
@@ -456,7 +448,7 @@ session_start();
             echo '  <div class="product-image">';
             echo '    <img src="' . $imgUrl . '" alt="Product Image">';
             echo '  </div>';
-            echo '  <div class="product-rating">★★★★☆</div>';
+            echo '  <div class="product-rating">★★★★★</div>';
             echo '  <div class="product-name">' . $row['name'] . '</div>';
             echo '  <div class="product-description">';
             echo '    <p class="card-text" style="flex-grow:1;min-height:70px;">' . $row['name'] . ' | ' . $row['model'] . ' | ' . $row['screen_size'] . ' | ' . $row['processor'] . ' | ' . $row['graphics'] . ' | ' . $row['memory'] . 'GB | ' . $row['storage'] . '</p>';
@@ -473,9 +465,10 @@ session_start();
             echo '  <div class="product-price">$' . number_format($row['price'], 2) . '</div>';
 
             echo '  </a>';
-            echo '  <div class="add-to-cart-button">';
-            echo '    <button class="add-to-cart">Add to Cart</button>';
-            echo '  </div>';
+            echo '  <form method="POST" action="./includes/add_product_to_cart_handler.php" class="add-to-cart-button">';
+            echo '    <input type="hidden" name="product_id" value="' . $row['id'] . '">';
+            echo '    <button type="submit" name="add_to_cart" class="add-to-cart">Add to Cart</button>';
+            echo '  </form>';
             echo '</div>';
           }
         } else {
@@ -488,9 +481,9 @@ session_start();
     </div>
 
     <!-- High-end Laptops -->
-    <div id="high-end-laptops">
-      <div>
-        <h5>High-end Laptops <span class="float-end" style="font-size:14px;">See more ></span></h5>
+    <div id="high-end-laptops" style="margin-bottom: 2rem; border: 1px solid #ddd; ">
+      <div style="background:#ededed;padding:10px 0; ">
+        <h3 style="margin:0 1rem 1rem 1rem;">High-end Laptops <a href="product_searcher.php" class="float-end" style=" font-size:14px;"> See more ></a></h3>
       </div>
       <div class="product-container">
 
@@ -521,7 +514,7 @@ session_start();
             echo '  <div class="product-image">';
             echo '    <img src="' . $imgUrl . '" alt="Product Image">';
             echo '  </div>';
-            echo '  <div class="product-rating">★★★★☆</div>';
+            echo '  <div class="product-rating">★★★★★</div>';
             echo '  <div class="product-name">' . $row['name'] . '</div>';
             echo '  <div class="product-description">';
             echo '    <p class="card-text" style="flex-grow:1;min-height:70px;">' . $row['name'] . ' | ' . $row['model'] . ' | ' . $row['screen_size'] . ' | ' . $row['processor'] . ' | ' . $row['graphics'] . ' | ' . $row['memory'] . 'GB | ' . $row['storage'] . '</p>';
@@ -538,9 +531,10 @@ session_start();
             echo '  <div class="product-price">$' . number_format($row['price'], 2) . '</div>';
 
             echo '  </a>';
-            echo '  <div class="add-to-cart-button">';
-            echo '    <button class="add-to-cart">Add to Cart</button>';
-            echo '  </div>';
+            echo '  <form method="POST" action="./includes/add_product_to_cart_handler.php" class="add-to-cart-button">';
+            echo '    <input type="hidden" name="product_id" value="' . $row['id'] . '">';
+            echo '    <button type="submit" name="add_to_cart" class="add-to-cart">Add to Cart</button>';
+            echo '  </form>';
             echo '</div>';
           }
         } else {

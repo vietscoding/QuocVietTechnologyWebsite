@@ -1,7 +1,116 @@
 <?php
+// var_dump($_SESSION);
 session_start();
+include './includes/db.php';
+$_SESSION['return_to'] = $_SERVER['REQUEST_URI'];
+
+if (isset($_SESSION['cart_notification']) && ($_SESSION["cart_notification"] == true)) {
+    echo '<script>alert("Successfully");</script>';
+    $_SESSION["cart_notification"] = false; // reset lại
+}
+
+// Handle Add to Cart via POST
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart']) && isset($_POST['product_id'])) {
+    $user_id = $_SESSION['user_id'] ?? null;
+    if (!$user_id) {
+        header("Location: login.php");
+        exit();
+    }
+    $product_id = (int)$_POST['product_id'];
+    if (!isset($_SESSION['cart'])) {
+        $_SESSION['cart'] = array();
+    }
+    $found = false;
+
+    $stmt = $conn->prepare("SELECT name, price FROM products WHERE id = ?");
+    $stmt->bind_param("i", $product_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result && $result->num_rows > 0) {
+        $product = $result->fetch_assoc();
+        foreach ($_SESSION['cart'] as &$item) {
+            if ($item['id'] == $product_id) {
+                $item['quantity'] += 1;
+                $found = true;
+                break;
+            }
+        }
+        if (!$found) {
+            $_SESSION['cart'][] = array(
+                'id' => $product_id,
+                'name' => $product['name'],
+                'price' => $product['price'],
+                'quantity' => 1
+            );
+        }
+        // Debug: Check session cart
+        var_dump($_SESSION['cart']); // Remove or comment out after testing
+
+        // Migrate to database if logged in
+        if ($user_id) {
+            $stmt_cart = $conn->prepare("SELECT id FROM carts WHERE user_id = ?");
+            $stmt_cart->bind_param("i", $user_id);
+            $stmt_cart->execute();
+            $cart_result = $stmt_cart->get_result();
+            $cart_id = null;
+            if ($cart_result && $cart_result->num_rows > 0) {
+                $cart = $cart_result->fetch_assoc();
+                $cart_id = $cart['id'];
+            } else {
+                $stmt_insert_cart = $conn->prepare("INSERT INTO carts (user_id, created_at, updated_at) VALUES (?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)");
+                $stmt_insert_cart->bind_param("i", $user_id);
+                $stmt_insert_cart->execute();
+                $cart_id = $conn->insert_id;
+            }
+            foreach ($_SESSION['cart'] as $item) {
+                $stmt_check = $conn->prepare("SELECT * FROM cart_items WHERE cart_id = ? AND product_id = ?");
+                $stmt_check->bind_param("ii", $cart_id, $item['id']);
+                $stmt_check->execute();
+                $result_check = $stmt_check->get_result();
+                if ($result_check && $result_check->num_rows > 0) {
+                    $cart_item = $result_check->fetch_assoc();
+                    $new_quantity = $cart_item['quantity'] + $item['quantity'];
+                    $stmt_update = $conn->prepare("UPDATE cart_items SET quantity = ? WHERE cart_id = ? AND product_id = ?");
+                    $stmt_update->bind_param("iii", $new_quantity, $cart_id, $item['id']);
+                    $stmt_update->execute();
+                } else {
+                    $stmt_insert = $conn->prepare("INSERT INTO cart_items (cart_id, product_id, quantity) VALUES (?, ?, ?)");
+                    $stmt_insert->bind_param("iii", $cart_id, $item['id'], $item['quantity']);
+                    $stmt_insert->execute();
+                }
+            }
+            // Reload cart from database into session
+            $_SESSION['cart'] = array(); // Clear first
+            $stmt_load_cart = $conn->prepare("SELECT c.product_id, p.name, p.price, c.quantity FROM cart_items c JOIN products p ON c.product_id = p.id WHERE c.cart_id = ?");
+            $stmt_load_cart->bind_param("i", $cart_id);
+            $stmt_load_cart->execute();
+            $cart_result = $stmt_load_cart->get_result();
+            while ($item = $cart_result->fetch_assoc()) {
+                $_SESSION['cart'][] = $item;
+            }
+            var_dump($_SESSION['cart']); // Debug: Check reloaded cart
+        }
+    }
+    $stmt->close();
+    if (isset($stmt_cart)) $stmt_cart->close();
+    if (isset($stmt_insert_cart)) $stmt_insert_cart->close();
+    if (isset($stmt_check)) $stmt_check->close();
+    if (isset($stmt_update)) $stmt_update->close();
+    if (isset($stmt_insert)) $stmt_insert->close();
+    if (isset($stmt_load_cart)) $stmt_load_cart->close();
+    echo json_encode(['success' => true, 'cart' => $_SESSION['cart']]); // Return cart data
+    exit();
+}
+
+$current_page = "product_searcher";
+
+// Lưu ID sản phẩm vừa xem vào session nếu có
+if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+    $_SESSION['last_viewed_product_id'] = (int)$_GET['id'];
+}
 ?>
-<!-- product_searcher.php -->
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -108,7 +217,6 @@ session_start();
             margin: 0;
             padding: 16px 12px;
             height: 100%;
-
         }
 
         .product-card:hover {
@@ -142,9 +250,7 @@ session_start();
             margin-bottom: 8px;
             display: -webkit-box;
             -webkit-line-clamp: 1;
-            /* 👈 Số dòng muốn hiển thị */
             -webkit-box-orient: vertical;
-            /* overflow: hidden; */
         }
 
         .product-description {
@@ -155,7 +261,6 @@ session_start();
             flex-grow: 1;
             display: -webkit-box;
             -webkit-line-clamp: 1;
-            /* 👈 Số dòng muốn hiển thị */
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
@@ -200,7 +305,6 @@ session_start();
             transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
-
         .product-toolbar {
             display: flex;
             gap: 1rem;
@@ -224,7 +328,6 @@ session_start();
             background: #45a049;
             color: #fff;
         }
-
 
         .filter-group-title {
             font-weight: bold;
@@ -268,6 +371,19 @@ session_start();
 
 <body>
     <?php include 'includes/header.php'; ?>
+    <!-- Notification Toast -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="addToCartToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
+            <div class="toast-header">
+                <strong class="me-auto">Success</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Product added to cart successfully!
+            </div>
+        </div>
+    </div>
+
     <main>
         <div class="search-layout">
             <!-- Sidebar Filter -->
@@ -282,8 +398,6 @@ session_start();
                         Laptop Standard
                         <span class="dropdown-arrow"></span>
                     </div>
-
-
                     <!-- </div> -->
                     <ul class="filter-list" style="display:none;">
                         <li><input type="checkbox" id="amd"><label for="amd">AMD</label></li>
@@ -322,9 +436,6 @@ session_start();
                         <li><input type="checkbox" id="need-thin-light"><label for="need-thin-light">Thin and Light - Fashion</label></li>
                     </ul>
                 </div>
-
-
-
                 <!-- CPU filter -->
                 <div class="filter-group" style="margin-bottom: 1rem; border-bottom: 1px solid #ddd; padding-bottom: 1rem;">
                     <div class="filter-group-title dropdown-toggle" onclick="toggleDropdown(this)">
@@ -343,7 +454,6 @@ session_start();
                         <li><input type="checkbox" id="intelcoreultra"><label for="intelcoreultra">Intel Core Ultra</label></li>
                     </ul>
                 </div>
-
                 <div class="filter-group" style="margin-bottom: 1rem; border-bottom: 1px solid #ddd; padding-bottom: 1rem;">
                     <div class="filter-group-title dropdown-toggle" onclick="toggleDropdown(this)">
                         GPU
@@ -407,7 +517,6 @@ session_start();
                         <li><input type="checkbox" id="screen17-3"><label for="screen17-3">17.3"</label></li>
                     </ul>
                 </div>
-
             </aside>
             <!-- Product Area -->
             <section class="product-area">
@@ -419,14 +528,11 @@ session_start();
                 </div>
                 <div class="product-container">
                     <?php
-                    include 'includes/db.php';
+                    include './includes/db.php';
                     // Kiểm tra kết nối
                     if ($conn->connect_error) {
                         die("Connection failed: " . $conn->connect_error);
-                    } else {
-                        // echo "Kết nối thành công";
                     }
-                    # Get product details
                     $sql = "SELECT id, name, model, screen_size, processor, graphics, memory, storage, price FROM products LIMIT 10";
                     $result = $conn->query($sql);
 
@@ -450,7 +556,6 @@ session_start();
                             echo '  <div class="product-description">';
                             echo '    <p class="card-text" style="flex-grow:1;min-height:70px;">' . $row['name'] . ' | ' . $row['model'] . ' | ' . $row['screen_size'] . ' | ' . $row['processor'] . ' | ' . $row['graphics'] . ' | ' . $row['memory'] . 'GB | ' . $row['storage'] . '</p>';
                             echo '  </div>';
-
                             echo '  <div class="product-specs">';
                             echo '    <span><img src="assets/images/product_specs_icon/cpu.svg" alt="CPU Icon"> ' . $row['processor'] . '<br></span>';
                             echo '    <span><img src="assets/images/product_specs_icon/gpu-card.svg" alt="GPU Icon"> ' . $row['graphics'] . '<br></span>';
@@ -458,13 +563,12 @@ session_start();
                             echo '    <span><img src="assets/images/product_specs_icon/ssd-storage.svg" alt="Storage Icon"> ' . $row['storage'] . '<br></span>';
                             echo '    <span><img src="assets/images/product_specs_icon/screen.svg" alt="Screen Icon"> ' . $row['screen_size'] . '<br><br></span>';
                             echo '  </div>';
-
                             echo '  <div class="product-price">$' . number_format($row['price'], 2) . '</div>';
-
                             echo '  </a>';
-                            echo '  <div class="add-to-cart-button">';
-                            echo '    <button class="add-to-cart">Add to Cart</button>';
-                            echo '  </div>';
+                            echo '  <form method="POST" action="./includes/add_product_to_cart_handler.php" class="add-to-cart-button">';
+                            echo '    <input type="hidden" name="product_id" value="' . $row['id'] . '">';
+                            echo '    <button type="submit" name="add_to_cart" class="add-to-cart">Add to Cart</button>';
+                            echo '  </form>';
                             echo '</div>';
                         }
                     } else {
@@ -472,14 +576,22 @@ session_start();
                     }
                     $conn->close();
                     ?>
-
                 </div>
             </section>
         </div>
     </main>
-
-
-
+    <!-- Notification Toast -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="addToCartToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
+            <div class="toast-header">
+                <strong class="me-auto">Success</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Product added to cart successfully!
+            </div>
+        </div>
+    </div>
     <?php include 'includes/footer.php'; ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
     <script src="assets/js/script.js"></script>
@@ -503,24 +615,23 @@ session_start();
             btn.addEventListener('click', function() {
                 currentSort = btn.getAttribute('data-sort');
                 reloadProducts();
-                // Đổi trạng thái active cho nút
                 document.querySelectorAll('.product-toolbar button').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
             });
         });
 
+        // Update reloadProducts function
         function reloadProducts() {
-            // Thu thập filter
             const filters = [];
             document.querySelectorAll('.filter-list input[type="checkbox"]:checked').forEach(function(cb) {
                 filters.push(cb.id);
             });
 
-            // Gửi AJAX tới PHP
-            fetch('../src/ajax/ajax_product_search.php', {
+            fetch('./ajax/ajax_product_search.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
+
                     },
                     body: JSON.stringify({
                         filters: filters,
@@ -530,7 +641,53 @@ session_start();
                 .then(res => res.text())
                 .then(html => {
                     document.querySelector('.product-container').innerHTML = html;
+                    document.querySelectorAll('.add-to-cart-button').forEach(form => {
+                        form.addEventListener('submit', function(e) {
+                            e.preventDefault();
+                            const formData = new FormData(form);
+                            fetch('./includes/add_product_to_cart_handler.php', { // Sử dụng URL cố định
+                                    method: 'POST',
+                                    body: formData
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    console.log('Response:', data); // Debug phản hồi
+                                    if (data.success) {
+                                        const toast = new bootstrap.Toast(document.getElementById('addToCartToast'));
+                                        toast.show();
+                                        reloadProducts();
+                                        updateCartDisplay(data.cart);
+                                    } else {
+                                        console.error('Add to cart failed:', data);
+                                    }
+                                })
+                                .catch(error => console.error('Error:', error));
+                        });
+                    });
                 });
+        }
+
+        // Function to update cart display (example implementation)
+        function updateCartDisplay(cart) {
+            let cartSummary = document.getElementById('cart-summary');
+            if (!cartSummary) {
+                cartSummary = document.createElement('div');
+                cartSummary.id = 'cart-summary';
+                cartSummary.style.position = 'fixed';
+                cartSummary.style.top = '10px';
+                cartSummary.style.right = '10px';
+                cartSummary.style.background = '#fff';
+                cartSummary.style.padding = '10px';
+                cartSummary.style.border = '1px solid #ddd';
+                cartSummary.style.borderRadius = '5px';
+                cartSummary.style.zIndex = '1000';
+                document.body.appendChild(cartSummary);
+            }
+            if (cart && cart.length > 0) {
+                cartSummary.innerHTML = `Cart: ${cart.length} items<br>` + cart.map(item => `${item.name} (x${item.quantity})`).join('<br>');
+            } else {
+                cartSummary.innerHTML = 'Cart is empty';
+            }
         }
 
         // Xử lý hiển thị nút "Xóa bộ lọc"
@@ -539,23 +696,18 @@ session_start();
 
         filterCheckboxes.forEach(checkbox => {
             checkbox.addEventListener('change', () => {
-                // Kiểm tra xem có checkbox nào được chọn không
                 const anyChecked = Array.from(filterCheckboxes).some(cb => cb.checked);
-                // Hiển thị hoặc ẩn nút "Xóa bộ lọc" dựa trên trạng thái của các checkbox
                 clearFilterBtn.style.display = anyChecked ? 'inline-block' : 'hidden';
             });
         });
 
         clearFilterBtn.addEventListener('click', () => {
-            // Bỏ chọn tất cả các checkbox
             filterCheckboxes.forEach(cb => cb.checked = false);
-            // Ẩn nút "Xóa bộ lọc"
             clearFilterBtn.style.display = 'hidden';
-            // Tải lại sản phẩm không có bộ lọc
             reloadProducts();
         });
     </script>
-
+    <div id="cart-summary"></div>
 </body>
 
 </html>

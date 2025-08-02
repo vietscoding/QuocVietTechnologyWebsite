@@ -185,11 +185,6 @@ a.navbar-brand {
 
 /* Format login box */
 
-body {
-  background-color: red;
-  color: var(--text-color-light);
-}
-
 .usage-need-link {
   text-decoration: none !important;
   color: inherit;
@@ -219,14 +214,15 @@ body {
 
 #login-form,
 #register-form {
+  background-color: var(--background);
   max-width: 400px;
   margin: auto;
   padding: 20px;
   padding-top: 50px;
   padding-bottom: 100px;
   border-radius: 5px;
-  border: none;
-  box-shadow: 0 4px 8px 0 var(--shadow-color);
+  border: 3px #000000;
+  box-shadow: 0 4px 8px 0 #7b7979;
 }
 
 /* #login-form form {

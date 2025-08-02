@@ -1,5 +1,11 @@
 <?php
 session_start();
+
+$user_id = $_SESSION['user_id'] ?? null;
+if ($user_id == null) {
+    header("Location: login.php");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -30,11 +36,11 @@ session_start();
                     <p>Telephone: <a href="tel:+84987654321">(+84) 987654321</a></p>
                     <div class="mb-3">
                         <span>Social Media: </span>
-                        <a href="#" title="Facebook"><i class="bi bi-facebook"></i></a>
-                        <a href="#" title="TikTok"><i class="bi bi-tiktok"></i></a>
-                        <a href="#" title="YouTube"><i class="bi bi-youtube"></i></a>
-                        <a href="#" title="Pinterest"><i class="bi bi-pinterest"></i></a>
-                        <a href="#" title="Instagram"><i class="bi bi-instagram"></i></a>
+                        <a href="https://www.facebook.com/" title="Facebook" target="_blank"><i class="bi bi-facebook"></i></a>
+                        <a href="https://www.tiktok.com/" title=" TikTok" target="_blank"><i class="bi bi-tiktok"></i></a>
+                        <a href="https://www.youtube.com/" title="YouTube" target="_blank"><i class="bi bi-youtube"></i></a>
+                        <a href="https://www.pinterest.com/" title="Pinterest" target="_blank"><i class="bi bi-pinterest"></i></a>
+                        <a href="https://www.instagram.com/" title="Instagram" target="_blank"><i class="bi bi-instagram"></i></a>
                     </div>
                     <form>
                         <div class="mb-3">
